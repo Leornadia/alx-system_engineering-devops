@@ -1,9 +1,2 @@
 #!/bin/bash
-echo "Local variables:"
-set | grep "^[^a-zA-Z0-9_]"
-
-echo "Environment variables:"
-printenv
-
-echo "Functions:"
-declare -f
+set
