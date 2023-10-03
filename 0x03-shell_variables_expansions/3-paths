@@ -1,2 +1,2 @@
 #!/bin/bash
-count=${#directories[@]}
+echo "$count"
