@@ -1,2 +1,2 @@
 #!/bin/bash
-NUM_DIRS=${#PATH_DIRS[@]}
+DIRS=$(find . -type d)
