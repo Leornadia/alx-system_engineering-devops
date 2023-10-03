@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "$count"
+NUM_DIRS=${#PATH_DIRS[@]}
