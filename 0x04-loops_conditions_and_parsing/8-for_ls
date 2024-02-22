@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-# This script displays the content of the current directory with formatted names
-
-for file in *; do  # Iterate over all files/directories in the current directory
-    if [[ -f $file && ! $file =~ ^\.* ]]; then 
-        filename=$(basename "$file")
-        echo "${filename#*-}”   
+# Loop through all non-hidden files in the current directory
+for file in *; do
+   
+    if [[ $file == *-* ]]; then
+       
+        echo ${file#*-}
     fi
 done
-
