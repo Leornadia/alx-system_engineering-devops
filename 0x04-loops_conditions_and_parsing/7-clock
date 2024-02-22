@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# This script displays simulated clock time for 12 hours and 59 minutes
+
+hour=0  # Initialize the hour
+while [ $hour -lt 12 ]
+do
+    echo "Hour: $hour"
+
+    minute=1  # Initialize the minutes
+    while [ $minute -lt 60 ]
+    do
+        echo "$minute"
+        minute=$((minute + 1)) 
+    done
+
+    hour=$((hour + 1))    
+done

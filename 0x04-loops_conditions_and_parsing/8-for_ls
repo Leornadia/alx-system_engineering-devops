@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# This script displays the content of the current directory with formatted names
+
+for file in *; do  # Iterate over all files/directories in the current directory
+    if [[ -f $file && ! $file =~ ^\.* ]]; then 
+        filename=$(basename "$file")
+        echo "${filename#*-}”   
+    fi
+done
+
