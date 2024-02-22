@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-# This script displays formatted directory content, excluding hidden files
+# Displays the contents of the current directory in list format.
+#   Only displays the part of the name after the first dash. 
 
-for file in *; do  
-    if [[ -f $file && ! $file =~ ^\.* ]]; then
-        filename=$(basename "$file")     
-        echo "${filename#*-}”            
-    fi
+list=$(ls)
+for i in $list; do
+  echo "$i" | cut -d '-' -f2
 done
 
