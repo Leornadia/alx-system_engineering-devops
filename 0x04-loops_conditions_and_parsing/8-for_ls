@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# Loop through all non-hidden files in the current directory
-for file in *; do
-   
-    if [[ $file == *-* ]]; then
-       
-        echo ${file#*-}
+# This script displays formatted directory content, excluding hidden files
+
+for file in *; do  
+    if [[ -f $file && ! $file =~ ^\.* ]]; then
+        filename=$(basename "$file")     
+        echo "${filename#*-}”            
     fi
 done
+
