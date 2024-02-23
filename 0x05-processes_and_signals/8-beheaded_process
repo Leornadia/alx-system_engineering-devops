@@ -1,13 +1,5 @@
 #!/usr/bin/env bash
-# This script directly kills the '7-highlander' process
+# Kills the process 7-highlander.
 
-
-highlander_pid=$(pgrep "7-highlander.sh")
-
-if [[ -n "$highlander_pid" ]]; then
-    kill "$highlander_pid"  # Send termination signal (SIGTERM by default)
-    echo "The '7-highlander' process has been terminated"
-else
-    echo "The '7-highlander' process was not found running"
-fi
+pkill -f -SIGKILL 7-highlander
 

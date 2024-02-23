@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
-# This script terminates the '4-to_infinity_and_beyond' process indirectly
+# Kills the 4-to_infinity_and_beyond process.
 
-infinity_pid=$(pgrep "4-to_infinity_and_beyond.sh")
-
-if [[ -n "$infinity_pid" ]]; then
-   
-    (sleep 10 & sleep_pid=$!; trap 'kill -TERM -$sleep_pid' EXIT; ) >/dev/null 2>&1 
-
-    echo "The 'To infinity and beyond' process should be terminated shortly"
-else
-    echo "The '4-to_infinity_and_beyond' process was not found running"
-fi
+pkill -f 4-to_infinity_and_beyond 
 
