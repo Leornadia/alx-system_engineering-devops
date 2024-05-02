@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Configures an Nginx server to listen on port 80.
-ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-service nginx start
-kill "$(pgrep 'nginx' | head -1)”
+# Configure Nginx to listen on port 80 for all IPv4 addresses
 
+apt-get update
+apt-get install -y nginx
+sed -i 's/listen.*/listen 0.0.0.0:80;/g' /etc/nginx/nginx.conf \
+/etc/nginx/conf.d/*.conf && systemctl restart nginx && ufw allow 'Nginx HTTP'
