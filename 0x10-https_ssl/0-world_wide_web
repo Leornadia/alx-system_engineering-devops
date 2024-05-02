@@ -1,16 +1,39 @@
 #!/usr/bin/env bash
-# print domains and subdomains
+# This script displays information about the subdomains of a given domain
 
-print_domain_subdomain () {
-    dig "$1" | grep -A1 'ANSWER SECTION:' | sed -r "s/$1./$2/g" | awk -F" " ' NR==2 { print "The subdomain " $1 " is a " $4 " record and points to " $5 }'
+dig_subdomain() {
+    local subdomain="$1"
+    local domain="$2"
+    dig "$subdomain.$domain" +short A | awk '{print $1}'
 }
 
-if [ "$#" -eq 2 ]
-then
-    print_domain_subdomain "$2.$1" "$2"
+display_info() {
+    local subdomain="$1"
+    local ip="$2"
+    if [ -n "$ip" ]; then
+        record_type="A"
+    else
+        record_type="N/A"
+        ip="N/A"
+    fi
+    echo "The subdomain $subdomain is a $record_type record and points to $ip"
+}
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 domain [subdomain]"
+    exit 1
+fi
+
+domain=$1
+subdomains=("www" "lb-01" "web-01" "web-02")
+
+if [ -z "$2" ]; then
+    for subdomain in "${subdomains[@]}"; do
+        ip=$(dig_subdomain "$subdomain" "$domain")
+        display_info "$subdomain" "$ip"
+    done
 else
-    print_domain_subdomain "www.$1" "www"
-    print_domain_subdomain "lb-01.$1" "lb-01"
-    print_domain_subdomain "web-01.$1" "web-01"
-    print_domain_subdomain "web-02.$1" "web-02"
+    subdomain=$2
+    ip=$(dig_subdomain "$subdomain" "$domain")
+    display_info "$subdomain" "$ip"
 fi
