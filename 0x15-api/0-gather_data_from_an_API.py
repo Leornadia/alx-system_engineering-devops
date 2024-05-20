@@ -1,3 +1,13 @@
+Let's address the PEP 8 style guide issues identified by your linter:
+
+1. Ensure there are two blank lines before function definitions.
+2. Split any line that is longer than 79 characters.
+3. Ensure there are two blank lines after function definitions.
+4. Remove the blank line at the end of the file.
+
+Here is the revised script:
+
+```python
 #!/usr/bin/python3
 """
 Returns to-do list information for a given employee ID.
@@ -9,6 +19,7 @@ It then prints the tasks completed by the employee.
 
 import requests
 import sys
+
 
 def main():
     if len(sys.argv) != 2:
@@ -44,6 +55,7 @@ def main():
     # Print the completed tasks one by one with indentation
     for complete in completed:
         print("\t {}".format(complete))
+
 
 if __name__ == "__main__":
     main()
