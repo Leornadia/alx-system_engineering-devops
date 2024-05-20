@@ -1,63 +1,43 @@
 #!/usr/bin/python3
-"""
-Using a REST API, for a given employee ID, returns information about their
-TODO list progress.
-"""
+
 import requests
-import sys
 
+def get_todo_progress(api_url, employee_id):
+  """
+  Fetches and displays an employee's TODO list progress from a REST API.
 
-def get_employee_todo_progress(employee_id):
-    """
-    Retrieves the TODO list progress for a given employee ID.
+  Args:
+      api_url (str): The base URL of the REST API.
+      employee_id (int): The ID of the employee whose progress to retrieve.
+  """
+  endpoint = f"{api_url}/users/{employee_id}/todos"
 
-    Args:
-        employee_id (int): The ID of the employee.
+  try:
+    response = requests.get(endpoint)
+    response.raise_for_status()  # Raise exception for non-200 status codes
+    data = response.json()
 
-    Returns:
-        str: The employee's TODO list progress.
-    """
-    # API endpoint URL
-    url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
+    completed_tasks = sum(task["completed"] for task in data)
+    total_tasks = len(data)
 
-    # Send a GET request to the API
-    response = requests.get(url)
+    print(f"Employee {data[0]['name']} is done with tasks({completed_tasks}/{total_tasks}):")
 
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Parse the JSON response data
-        todo_list = response.json()
+    for task in data:
+      if task["completed"]:
+        print(f"\t{task['title']}")
 
-        # Count the number of completed tasks
-        completed_tasks = sum(task["completed"] for task in todo_list)
-
-        # Get the employee's name
-        employee_name = todo_list[0]["userId"]
-
-        # Get the total number of tasks
-        total_tasks = len(todo_list)
-
-        # Format the output string
-        output = (
-            f"Employee {employee_name} is done with "
-            f"tasks({completed_tasks}/{total_tasks}):\n"
-        )
-
-        # Add the titles of completed tasks
-        for task in todo_list:
-            if task["completed"]:
-                output += f"\t {task['title']}\n"
-
-        return output
-    else:
-        return f"Error: {response.status_code}"
-
+  except requests.exceptions.RequestException as e:
+    print(f"Error fetching data for employee ID {employee_id}: {e}")
 
 if __name__ == "__main__":
-    # Check if an employee ID is provided as a command-line argument
-    if len(sys.argv) > 1 and sys.argv[1].isdigit():
-        employee_id = int(sys.argv[1])
-        todo_progress = get_employee_todo_progress(employee_id)
-        print(todo_progress)
-    else:
-        print("Usage: python3 script.py <employee_id>")
+  # Replace with the actual REST API URL for employee data
+  api_url = "https://your_api_endpoint.com"
+
+  # Get employee ID from command line argument (assuming a single argument)
+  try:
+    employee_id = int(input("Enter employee ID: "))
+    get_todo_progress(api_url, employee_id)
+  except ValueError:
+    print("Invalid employee ID. Please enter an integer.")
+
+
