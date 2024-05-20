@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
-Using a REST API, for a given employee ID, returns information about their TODO list progress.
+Using a REST API, for a given employee ID, returns information about their
+TODO list progress.
 """
 import requests
 import sys
@@ -37,7 +38,10 @@ def get_employee_todo_progress(employee_id):
         total_tasks = len(todo_list)
 
         # Format the output string
-        output = f"Employee {employee_name} is done with tasks({completed_tasks}/{total_tasks}):\n"
+        output = (
+            f"Employee {employee_name} is done with "
+            f"tasks({completed_tasks}/{total_tasks}):\n"
+        )
 
         # Add the titles of completed tasks
         for task in todo_list:
