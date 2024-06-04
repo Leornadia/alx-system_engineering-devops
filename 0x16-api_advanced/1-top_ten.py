@@ -8,6 +8,7 @@ import requests
 def top_ten(subreddit):
     """
     Queries the Reddit API and prints the titles of the first 10 hot posts listed for a given subreddit.
+    If the subreddit is invalid, prints None.
     """
     url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
     headers = {'User-Agent': 'MyAPI/0.0.1'}
